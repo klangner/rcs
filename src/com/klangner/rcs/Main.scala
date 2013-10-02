@@ -7,6 +7,7 @@ import scala.swing.SwingApplication
   
 
 object Main extends SwingApplication {
+	val robot = new Robot
 	def mainFrame = new AppWindow()
 	UIManager.setLookAndFeel(new NimbusLookAndFeel)
 	
