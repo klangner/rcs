@@ -5,22 +5,22 @@ class Robot {
   val name = "Condor7"
   
   def moveForward(){
-	  print("Forward")
+	  println("Forward")
   }
   
   def moveBackward(){
-	  print("Backward")
+	  println("Backward")
   }
   
   def turnRight(){
-	  print("Turn right")
+	  println("Turn right")
   }
   
   def turnLeft(){
-	  print("Turn left")
+	  println("Turn left")
   }
   
   def stop(){
-	  print("stop")
+	  println("stop")
   }
 }
