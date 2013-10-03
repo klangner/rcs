@@ -1,26 +1,28 @@
 package com.klangner.rcs
 
+import com.klangner.rcs.bt.BluetoothDevice
+
 class Robot {
 
-  val name = "Condor7"
+  val device = BluetoothDevice.connect();
   
   def moveForward(){
-	  println("Forward")
+	  device.send("Forward")
   }
   
   def moveBackward(){
-	  println("Backward")
+	  device.send("Backward")
   }
   
   def turnRight(){
-	  println("Turn right")
+	  device.send("Turn right")
   }
   
   def turnLeft(){
-	  println("Turn left")
+	  device.send("Turn left")
   }
   
   def stop(){
-	  println("stop")
+	  device.send("stop")
   }
 }

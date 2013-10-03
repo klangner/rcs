@@ -28,10 +28,10 @@ class RemoteDeviceDiscovery {
         DiscoveryListener listener = new DiscoveryListener() {
 
             public void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod) {
-                System.out.println("Device " + btDevice.getBluetoothAddress() + " found");
                 deviceDiscovered = btDevice;
                 try {
-                    System.out.println("  name " + btDevice.getFriendlyName(false));
+                    System.out.println("Device " + btDevice.getBluetoothAddress() + 
+                    		" name: " + btDevice.getFriendlyName(false) + " found");
                 } catch (IOException cantGetDeviceName) {
                 }
             }

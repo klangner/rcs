@@ -2,7 +2,6 @@ package com.klangner.rcs.bt;
 
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 import javax.bluetooth.DataElement;
 import javax.bluetooth.DeviceClass;
@@ -11,6 +10,7 @@ import javax.bluetooth.LocalDevice;
 import javax.bluetooth.RemoteDevice;
 import javax.bluetooth.ServiceRecord;
 import javax.bluetooth.UUID;
+import javax.microedition.io.Connection;
 import javax.microedition.io.Connector;
 
 /**
@@ -19,15 +19,14 @@ import javax.microedition.io.Connector;
  */
 public class ServicesSearch {
 
+	private static final UUID serviceUUID = new UUID(0x1101);
     private static String serviceUrl = null;
 
     public static void main(String[] args) throws IOException, InterruptedException {
     	String url = getService();
-    	System.out.println(url);
     	if(url != null){
-	    	OutputStream out = Connector.openOutputStream(url);
-	    	String text = "hello";
-	    	out.write(text.getBytes());
+	    	Connection out = Connector.open(url);
+	    	System.out.println(out);
 	    	out.close();
     	}
     }
@@ -36,7 +35,7 @@ public class ServicesSearch {
 
         // First run RemoteDeviceDiscovery and use discoved device
         RemoteDevice device = RemoteDeviceDiscovery.findDevice();
-        UUID serviceUUID = new UUID(0x1101); // android service
+        
         final Object serviceSearchCompletedEvent = new Object();
 
         DiscoveryListener listener = new DiscoveryListener() {
@@ -81,8 +80,6 @@ public class ServicesSearch {
         if(device != null) {
 
             synchronized(serviceSearchCompletedEvent) {
-//                System.out.println("search services on " + device.getBluetoothAddress() + " " + device.getFriendlyName(false));
-            	System.out.println("Test: " + device);
                 LocalDevice.getLocalDevice().getDiscoveryAgent().searchServices(attrIDs, searchUuidSet, device, listener);
                 serviceSearchCompletedEvent.wait();
             }
