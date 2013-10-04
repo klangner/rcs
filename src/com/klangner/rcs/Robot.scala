@@ -6,8 +6,7 @@ import com.klangner.rcs.bt.BluetoothDevice
 class Robot{
 
   val device = BluetoothDevice.connect();
-//  def send(message:String) = device.send(message + "\r\n")
-  def send(message:String) = println(message)
+  def send(message:String) = device.send(message)
   
   def moveForward(){
 	  send("Forward")

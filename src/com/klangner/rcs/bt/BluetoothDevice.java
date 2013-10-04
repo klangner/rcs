@@ -1,8 +1,9 @@
 package com.klangner.rcs.bt;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 import javax.bluetooth.DeviceClass;
 import javax.bluetooth.DiscoveryAgent;
@@ -17,14 +18,14 @@ import javax.microedition.io.StreamConnection;
  * A simple SPP client that connects with an SPP server
  */
 public class BluetoothDevice implements DiscoveryListener{
-	private static final String DEVICE_ADDRESS = "0018E40C6809"; // Arduino
-//	private static final String DEVICE_ADDRESS = "40B0FA0B07EF"; // Nexus
+//	private static final String DEVICE_ADDRESS = "0018E40C6809"; // Arduino
+	private static final String DEVICE_ADDRESS = "40B0FA0B07EF"; // Nexus
 	//object used for waiting
 	private static Object lock=new Object();
 	private static RemoteDevice deviceDiscovered = null;
 	private static String connectionURL=null;
-	private OutputStream outStream;
-	private InputStream inStream;
+	private PrintWriter writer;
+	private BufferedReader reader;
 	
 	
 	public static void main(String[] args) throws IOException {
@@ -77,21 +78,14 @@ public class BluetoothDevice implements DiscoveryListener{
 	}
 	
 	public void send(String message){
-		try {
-			outStream.write(message.getBytes("ISO-8859-1"));
-			outStream.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		writer.write(message);
+		writer.flush();
 	}
 	
 	public String receive(){
 		try {
-			int size = inStream.available(); 
-			if(size > 0){
-				byte[] buff = new byte[size];
-				inStream.read(buff);
-				return new String(buff);
+			if(reader.ready()){
+				return reader.readLine();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -115,8 +109,8 @@ public class BluetoothDevice implements DiscoveryListener{
 			StreamConnection streamConnection;
 			try {
 				streamConnection = (StreamConnection)Connector.open(connectionURL);
-				outStream=streamConnection.openOutputStream();
-				inStream=streamConnection.openInputStream();
+				writer= new PrintWriter(streamConnection.openOutputStream());
+				reader=new BufferedReader(new InputStreamReader(streamConnection.openInputStream()));
 				System.out.println("Service: " + connectionURL);
 			} catch (IOException e) {
 				e.printStackTrace();
