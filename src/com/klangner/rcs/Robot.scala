@@ -23,6 +23,6 @@ class Robot {
   }
   
   def stop(){
-	  device.send("stop")
+	  device.send("stop\r\n")
   }
 }
