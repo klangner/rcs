@@ -15,6 +15,12 @@ object Main extends SwingApplication {
 	
 	override def startup(args: Array[String]) {
 		mainFrame.visible = true
-	}	
+	}
+	
+	while(true){
+		val text = robot.receive()
+		if(text != null) println(text);
+		Thread.sleep(100);
+	}
 }
 

@@ -2,27 +2,35 @@ package com.klangner.rcs
 
 import com.klangner.rcs.bt.BluetoothDevice
 
-class Robot {
+
+class Robot{
 
   val device = BluetoothDevice.connect();
+//  def send(message:String) = device.send(message + "\r\n")
+  def send(message:String) = println(message)
   
   def moveForward(){
-	  device.send("Forward")
+	  send("Forward")
   }
   
   def moveBackward(){
-	  device.send("Backward")
+	  send("Backward")
   }
   
   def turnRight(){
-	  device.send("Turn right")
+	  send("Turn right")
   }
   
   def turnLeft(){
-	  device.send("Turn left")
+	  send("Turn left")
   }
   
   def stop(){
-	  device.send("stop\r\n")
+	  send("stop")
   }
+  
+  def receive() : String = {
+	  device.receive() 
+  }
+  
 }

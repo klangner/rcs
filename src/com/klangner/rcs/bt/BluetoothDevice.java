@@ -86,13 +86,17 @@ public class BluetoothDevice implements DiscoveryListener{
 	}
 	
 	public String receive(){
-		byte[] buff = new byte[1024];
 		try {
-			inStream.read(buff);
+			int size = inStream.available(); 
+			if(size > 0){
+				byte[] buff = new byte[size];
+				inStream.read(buff);
+				return new String(buff);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return new String(buff);
+		return null;
 	}
 
 	//methods of DiscoveryListener
