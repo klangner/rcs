@@ -58,19 +58,19 @@ void executeCommand(char command)
   switch(command)
   {
       case 'f'://Move Forward
-        advance (255,255);   //move forward in max speed
+        forward (255);   //move forward in max speed
         break;
       case 'b'://Move Backward
-        back_off (255,255);   //move back in max speed
+        backward (255);   //move back in max speed
         break;
       case 'l'://Turn Left
-        turn_L (100,100);
+        turnLeft (255);
         break;      
       case 'r'://Turn Right
-        turn_R (100,100);
+        turnRight (255);
         break;
       case 'p':
-        Serial.println("Ping");
+        ping();
         break;
       case 's':
         stop();
@@ -85,38 +85,44 @@ void stop(void)                    //Stop
   digitalWrite(E2,LOW);  
   Serial.println("Stop");  
 }  
-void advance(char a,char b)          //Move forward
+void forward(char speed)          //Move forward
 {
-  analogWrite (E1,a);      //PWM Speed Control
+  analogWrite (E1,speed);      //PWM Speed Control
   digitalWrite(M1,HIGH);   
-  analogWrite (E2,b);   
+  analogWrite (E2,speed);   
   digitalWrite(M2,HIGH);
-    Serial.println("Forward");  
+  Serial.println("Forward");  
 } 
-void back_off (char a,char b)          //Move backward
+void backward(char speed)          //Move backward
 {
-  analogWrite (E1,a);
+  analogWrite (E1,speed);
   digitalWrite(M1,LOW);  
-  analogWrite (E2,b);   
+  analogWrite (E2,speed);   
   digitalWrite(M2,LOW);
-    Serial.println("Backward");  
+  Serial.println("Backward");  
 }
-void turn_L (char a,char b)             //Turn Left
+void turnLeft(char speed)             //Turn Left
 {
-  analogWrite (E1,a);
+  analogWrite (E1,speed);
   digitalWrite(M1,LOW);   
-  analogWrite (E2,b);   
+  analogWrite (E2,speed);   
   digitalWrite(M2,HIGH);
-    Serial.println("Left");  
-}
-void turn_R (char a,char b)             //Turn Right
-{
-  analogWrite (E1,a);
-  digitalWrite(M1,HIGH);   
-  analogWrite (E2,b);   
-  digitalWrite(M2,LOW);
-    Serial.println("Right");  
+  Serial.println("Left");  
 }
 
+void turnRight(char speed)             //Turn Right
+{
+  analogWrite (E1,speed);
+  digitalWrite(M1,HIGH);   
+  analogWrite (E2,speed);   
+  digitalWrite(M2,LOW);
+  Serial.println("Right");  
+}
+
+void ping()         
+{
+  Serial.println("Ping");  
+  blueToothSerial.println("pong");
+}
 
 
