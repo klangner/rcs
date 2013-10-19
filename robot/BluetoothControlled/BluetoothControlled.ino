@@ -52,22 +52,23 @@ int E1 = 5;     //M1 Speed Control
 int E2 = 6;     //M2 Speed Control
 int M1 = 4;    //M1 Direction Control
 int M2 = 7;    //M1 Direction Control
+int SPEED = 200;
  
 void executeCommand(char command)
 {
   switch(command)
   {
       case 'f'://Move Forward
-        forward (255);   //move forward in max speed
+        forward(SPEED);   //move forward in max speed
         break;
       case 'b'://Move Backward
-        backward (255);   //move back in max speed
+        backward(SPEED);   //move back in max speed
         break;
       case 'l'://Turn Left
-        turnLeft (255);
+        turnLeft(SPEED);
         break;      
       case 'r'://Turn Right
-        turnRight (255);
+        turnRight(SPEED);
         break;
       case 'p':
         ping();
